@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar> 
+    
+    <ion-title>
+     <img src="./assets/Logo fix.png" height="55">
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openCart()">
+        <ion-badge *ngIf="cart.length > 0">{{ cart.length }}</ion-badge>
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+ 
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <!---  <ion-item>
+    <ion-icon slot="start" name="moon"></ion-icon>
+    <ion-label>Toggle Dark Mode</ion-label>
+      <ion-toggle
+        [ngModel] = "darkMode"
+        (ionChange)="colorDark()" slot="end"></ion-toggle>
+</ion-item>
+-->
+
+  <div *ngFor="let cat of items" class="category-block">
+ 
+    <ion-row no-padding class="category-banner">
+      <ion-col text-left button tappable (click)="cat.expanded = !cat.expanded" align-self-center>
+        {{ cat.category }}
+      </ion-col>
+    </ion-row>
+ 
+    <ion-slides [options]="sliderConfig">
+      <ion-slide *ngFor="let product of cat.products">
+        <div *ngIf="cat.expanded">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>
+                {{ product.name }}
+              </ion-card-title>
+              <ion-card-content>
+                <img src="https://via.placeholder.com/300x300">
+                <ion-card-subtitle>
+                  ${{ product.price }}
+                </ion-card-subtitle>
+                <ion-button expand="full" (click)="addToCart(product)">Add to Cart</ion-button>
+
+              </ion-card-content>
+            </ion-card-header>
+          </ion-card>
+        </div>
+      </ion-slide>
+    </ion-slides>
+ 
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="arrow-up"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button href="/welcome"><ion-icon name="log-out"></ion-icon></ion-fab-button>
+         <ion-fab-button href="/home"><ion-icon name="home"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="end">
+      <ion-fab-button><ion-toggle 
+        [ngModel] = "darkMode"
+        (ionChange)="colorDark()"></ion-toggle> </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
